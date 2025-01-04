@@ -7,7 +7,10 @@ import com.vietquoc.todo_list.model.Note
 import com.vietquoc.todo_list.repository.NoteRepository
 import kotlinx.coroutines.launch
 
-class NoteViewModel(app: Application, private val noteRepository: NoteRepository) : AndroidViewModel(app) {
+class NoteViewModel(
+    val app: Application,
+    private val noteRepository: NoteRepository
+) : AndroidViewModel(app) {
 
     fun addNote(note: Note) = viewModelScope.launch {
         noteRepository.insert(note = note)
