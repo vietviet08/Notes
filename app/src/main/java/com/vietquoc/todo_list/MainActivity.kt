@@ -5,16 +5,27 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
+import com.vietquoc.todo_list.db.NoteDb
+import com.vietquoc.todo_list.repository.NoteRepository
+import com.vietquoc.todo_list.viewmodel.NoteViewModel
+import com.vietquoc.todo_list.viewmodel.NoteViewModelFactory
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var noteViewModel: NoteViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
+        setupViewModel()
+    }
+
+    private fun setupViewModel() {
+        val noteRepository = NoteRepository(NoteDb(this))
+        val noteViewModelFactory = NoteViewModelFactory(application, noteRepository)
+        noteViewModel = ViewModelProvider(this, noteViewModelFactory)[NoteViewModel::class.java]
     }
 }
