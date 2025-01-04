@@ -1,8 +1,6 @@
 package com.vietquoc.todo_list.fragments
 
-import android.app.Activity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -12,13 +10,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
 import com.vietquoc.todo_list.MainActivity
 import com.vietquoc.todo_list.R
-import com.vietquoc.todo_list.adapter.NoteAdapter
 import com.vietquoc.todo_list.databinding.FragmentAddNoteBinding
-import com.vietquoc.todo_list.databinding.NoteLayoutBinding
 import com.vietquoc.todo_list.model.Note
 import com.vietquoc.todo_list.viewmodel.NoteViewModel
 
@@ -33,8 +30,7 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note), MenuProvider {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         addNoteBinding = FragmentAddNoteBinding.inflate(inflater, container, false)
         return binding.root
     }

@@ -1,7 +1,6 @@
 package com.vietquoc.todo_list.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -11,6 +10,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -33,8 +33,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         homeBinding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -80,7 +79,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
         }
     }
 
-    private fun searchNote(query: String?){
+    private fun searchNote(query: String?) {
         val searchQuery = "%$query%"
         noteViewModel.searchNote(searchQuery).observe(this) { list ->
             noteAdapter.differ.submitList(list)
@@ -92,7 +91,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        if(newText != null){
+        if (newText != null) {
             searchNote(newText)
         }
         return true
