@@ -19,7 +19,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins"
             android:text="Edit Note."
-            android:textColor="@color/red"
+            android:textColor="@color/orange"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -30,7 +30,7 @@
             android:layout_below="@id/editNoteHeading"
             android:layout_marginTop="16dp"
             android:background="@drawable/pink_border"
-            android:fontFamily="@font/poppins_thin"
+            android:fontFamily="@font/poppins"
             android:hint="Enter the title"
             android:maxLines="1"
             android:padding="12dp"
@@ -56,7 +56,7 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
             android:clickable="true"
-            android:backgroundTint="@color/pink"
+            android:backgroundTint="@color/yellow"
             android:tintMode="@color/white"
             android:src="@drawable/baseline_done_24"
             android:layout_alignParentBottom="true"

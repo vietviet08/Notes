@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -57,6 +58,10 @@ class EditNoteFragment : Fragment(R.layout.fragment_edit_note), MenuProvider {
             updateNote(editNoteView)
         }
 
+        val actionBar = (activity as? AppCompatActivity)?.supportActionBar
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.setDisplayShowHomeEnabled(true)
+
     }
 
     private fun updateNote(view: View) {
@@ -90,6 +95,12 @@ class EditNoteFragment : Fragment(R.layout.fragment_edit_note), MenuProvider {
         when (menuItem.itemId) {
             R.id.deleteMenu -> {
                 deleteNote(editNoteView)
+                return true
+            }
+
+            android.R.id.home -> {
+                view?.findNavController()
+                    ?.popBackStack(R.id.homeFragment, false)
                 return true
             }
 

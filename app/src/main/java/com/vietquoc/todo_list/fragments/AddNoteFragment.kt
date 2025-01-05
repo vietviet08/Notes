@@ -8,11 +8,13 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.vietquoc.todo_list.MainActivity
 import com.vietquoc.todo_list.R
 import com.vietquoc.todo_list.databinding.FragmentAddNoteBinding
@@ -43,6 +45,16 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note), MenuProvider {
 
         noteViewModel = (activity as MainActivity).noteViewModel
         addNoteView = view
+
+        val actionBar = (activity as? AppCompatActivity)?.supportActionBar
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.setDisplayShowHomeEnabled(true)
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        addNoteBinding = null
     }
 
     private fun saveNote(view: View) {
@@ -63,22 +75,25 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note), MenuProvider {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        addNoteBinding = null
-    }
-
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menu.clear()
         menuInflater.inflate(R.menu.menu_add_note, menu)
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-        if (menuItem.itemId == R.id.saveMenu) {
-            saveNote(addNoteView)
-            return true
+        when (menuItem.itemId) {
+            R.id.saveMenu -> {
+                saveNote(addNoteView)
+                return true
+            }
+
+            android.R.id.home -> {
+                findNavController().popBackStack(R.id.homeFragment, false)
+                return true
+            }
+
+            else -> return false
         }
-        return false
     }
 
 }
