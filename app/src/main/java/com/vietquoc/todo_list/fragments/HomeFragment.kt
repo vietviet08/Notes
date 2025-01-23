@@ -12,30 +12,29 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.vietquoc.todo_list.MainActivity
 import com.vietquoc.todo_list.R
 import com.vietquoc.todo_list.adapter.NoteAdapter
 import com.vietquoc.todo_list.databinding.FragmentHomeBinding
 import com.vietquoc.todo_list.model.Note
 import com.vietquoc.todo_list.viewmodel.NoteViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextListener,
-    MenuProvider {
+@AndroidEntryPoint
+class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextListener, MenuProvider {
 
-    private var homeBinding: FragmentHomeBinding? = null
-    private val binding get() = homeBinding!!
-
-    private lateinit var noteViewModel: NoteViewModel
+    private lateinit var binding: FragmentHomeBinding
+    private val noteViewModel by viewModels<NoteViewModel>()
     private lateinit var noteAdapter: NoteAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        homeBinding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -44,8 +43,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
 
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
-
-        noteViewModel = (activity as MainActivity).noteViewModel
 
         setupHomeRecyclerView()
 
@@ -100,11 +97,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), SearchView.OnQueryTextLis
             searchNote(newText)
         }
         return true
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        homeBinding = null
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {

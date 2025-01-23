@@ -1,16 +1,17 @@
 package com.vietquoc.todo_list.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vietquoc.todo_list.model.Note
 import com.vietquoc.todo_list.repository.NoteRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NoteViewModel(
-    val app: Application,
+@HiltViewModel
+class NoteViewModel @Inject constructor(
     private val noteRepository: NoteRepository
-) : AndroidViewModel(app) {
+) : ViewModel() {
 
     fun addNote(note: Note) = viewModelScope.launch {
         noteRepository.insert(note = note)
@@ -27,7 +28,5 @@ class NoteViewModel(
     fun getAllNotes() = noteRepository.getAllNotes()
 
     fun searchNote(query: String) = noteRepository.searchNote(query)
-
-    fun getNoteById(id: Int) = noteRepository.getNoteById(id)
 
 }

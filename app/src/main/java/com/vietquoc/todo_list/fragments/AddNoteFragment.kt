@@ -12,28 +12,28 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.vietquoc.todo_list.MainActivity
 import com.vietquoc.todo_list.R
 import com.vietquoc.todo_list.databinding.FragmentAddNoteBinding
 import com.vietquoc.todo_list.model.Note
 import com.vietquoc.todo_list.viewmodel.NoteViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddNoteFragment : Fragment(R.layout.fragment_add_note), MenuProvider {
 
-    private var addNoteBinding: FragmentAddNoteBinding? = null
-    private val binding get() = addNoteBinding!!
-
-    private lateinit var noteViewModel: NoteViewModel
+    private lateinit var binding: FragmentAddNoteBinding
+    private val noteViewModel by viewModels<NoteViewModel>()
     private lateinit var addNoteView: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        addNoteBinding = FragmentAddNoteBinding.inflate(inflater, container, false)
+        binding = FragmentAddNoteBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -43,18 +43,11 @@ class AddNoteFragment : Fragment(R.layout.fragment_add_note), MenuProvider {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        noteViewModel = (activity as MainActivity).noteViewModel
         addNoteView = view
 
         val actionBar = (activity as? AppCompatActivity)?.supportActionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
         actionBar?.setDisplayShowHomeEnabled(true)
-    }
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-        addNoteBinding = null
     }
 
     private fun saveNote(view: View) {

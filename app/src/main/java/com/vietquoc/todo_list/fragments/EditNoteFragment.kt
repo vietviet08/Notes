@@ -13,21 +13,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
-import com.vietquoc.todo_list.MainActivity
 import com.vietquoc.todo_list.R
 import com.vietquoc.todo_list.databinding.FragmentEditNoteBinding
 import com.vietquoc.todo_list.model.Note
 import com.vietquoc.todo_list.viewmodel.NoteViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EditNoteFragment : Fragment(R.layout.fragment_edit_note), MenuProvider {
 
-    private var editNoteBinding: FragmentEditNoteBinding? = null
-    private val binding get() = editNoteBinding!!
-
-    private lateinit var noteViewModel: NoteViewModel
+    private lateinit var binding: FragmentEditNoteBinding
+    private val noteViewModel by viewModels<NoteViewModel>()
     private lateinit var currentNote: Note
     private lateinit var editNoteView: View
 
@@ -37,7 +37,7 @@ class EditNoteFragment : Fragment(R.layout.fragment_edit_note), MenuProvider {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        editNoteBinding = FragmentEditNoteBinding.inflate(inflater, container, false)
+        binding = FragmentEditNoteBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -47,7 +47,6 @@ class EditNoteFragment : Fragment(R.layout.fragment_edit_note), MenuProvider {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        noteViewModel = (activity as MainActivity).noteViewModel
         editNoteView = view
         currentNote = args.note!!
 
@@ -79,11 +78,6 @@ class EditNoteFragment : Fragment(R.layout.fragment_edit_note), MenuProvider {
             Toast.makeText(editNoteView.context, "Please enter note title", Toast.LENGTH_SHORT)
                 .show()
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        editNoteBinding = null
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
