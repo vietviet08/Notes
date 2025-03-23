@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.vietquoc.todo_list.R
 import com.vietquoc.todo_list.databinding.FragmentEditNoteBinding
@@ -93,6 +94,10 @@ class EditNoteFragment : Fragment(R.layout.fragment_edit_note), MenuProvider {
             }
 
             android.R.id.home -> {
+                //1
+//                findNavController().popBackStack(R.id.homeFragment, false)
+
+                //2
                 view?.findNavController()
                     ?.popBackStack(R.id.homeFragment, false)
                 return true

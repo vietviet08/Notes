@@ -1,39 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+            xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/nav_graph"
+            app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/addNoteFragment"
+        tools:layout="@layout/fragment_add_note"
         android:name="com.vietquoc.todo_list.fragments.AddNoteFragment"
         android:label="AddNoteFragment">
-        <action
-            android:id="@+id/action_addNoteFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+        <action android:id="@+id/action_addNoteFragment_to_homeFragment" app:destination="@id/homeFragment"/>
     </fragment>
     <fragment
         android:id="@+id/editNoteFragment"
+        tools:layout="@layout/fragment_edit_note"
         android:name="com.vietquoc.todo_list.fragments.EditNoteFragment"
         android:label="EditNoteFragment">
-        <action
-            android:id="@+id/action_editNoteFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
         <argument
             android:name="note"
             app:argType="com.vietquoc.todo_list.model.Note"
             app:nullable="true" />
+        <action android:id="@+id/action_editNoteFragment_to_homeFragment" app:destination="@id/homeFragment"/>
 
     </fragment>
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.vietquoc.todo_list.fragments.HomeFragment"
-        android:label="HomeFragment">
-        <action
-            android:id="@+id/action_homeFragment_to_addNoteFragment"
-            app:destination="@id/addNoteFragment" />
+            android:id="@+id/homeFragment"
+            tools:layout="@layout/fragment_home"
+            android:name="com.vietquoc.todo_list.fragments.HomeFragment"
+            android:label="HomeFragment">
         <action
             android:id="@+id/action_homeFragment_to_editNoteFragment"
             app:destination="@id/editNoteFragment" />
+        <action android:id="@+id/action_homeFragment_to_addNoteFragment" app:destination="@id/addNoteFragment"/>
     </fragment>
 </navigation>
